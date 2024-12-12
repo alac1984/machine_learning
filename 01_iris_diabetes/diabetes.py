@@ -1,3 +1,12 @@
+"""
+Nesse script trabalhamos com o dataset de diabetes "diabetes_data.csv", mantendo
+sua coluna risk_score como contínua, e usamos então algumas técnicas para treinar
+um modelo para dados contínuos (RandomForestRegressor) e avaliar a eficiência do
+mesmo (mean_absolute_error, mean_squared_error, cross_val_score). Exploramos também
+como "afinar" um modelo para conseguir um melhor desempenho. Com Seaborn fizemos
+um heatmap pra ver quais features eram mais relevantes em relação a target.
+"""
+
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
@@ -23,7 +32,7 @@ df = pd.read_csv('diabetes_data.csv')
 
 # # Criar os dados para o heatmap
 # heat_data = df.drop(columns=['user_id'])
-
+s
 # # Preprocessar os dados de data (para evitar erros com datas em formato string)
 # heat_data['year'] = pd.to_datetime(heat_data['date']).dt.year
 # heat_data['month'] = pd.to_datetime(heat_data['date']).dt.month
@@ -100,6 +109,3 @@ plt.xlabel('Valores reais')
 plt.xlabel('Resíduos')
 plt.title('Gráfico de Resíduos')
 plt.savefig('residuos.png')
-
-
-

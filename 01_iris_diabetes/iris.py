@@ -1,3 +1,11 @@
+"""
+Nosso primeiro projeto em Machine Learning. Pegamos o dataset de iris, treinamos um
+modelo RandomForestClassifier e medimos seu desempenho. Aplicamos técnicas como
+cross_value_score (para medir se havia overfitting) e confusion_matrix pra estudar
+os erros do modelo. Também exploramos os dados do classification_report.
+"""
+
+
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
