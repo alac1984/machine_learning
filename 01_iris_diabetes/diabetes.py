@@ -32,7 +32,6 @@ df = pd.read_csv('diabetes_data.csv')
 
 # # Criar os dados para o heatmap
 # heat_data = df.drop(columns=['user_id'])
-s
 # # Preprocessar os dados de data (para evitar erros com datas em formato string)
 # heat_data['year'] = pd.to_datetime(heat_data['date']).dt.year
 # heat_data['month'] = pd.to_datetime(heat_data['date']).dt.month
@@ -109,3 +108,5 @@ plt.xlabel('Valores reais')
 plt.xlabel('Resíduos')
 plt.title('Gráfico de Resíduos')
 plt.savefig('residuos.png')
+
+
