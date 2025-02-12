@@ -1,10 +1,31 @@
 """
-Nosso primeiro projeto em Machine Learning. Pegamos o dataset de iris, treinamos um
-modelo RandomForestClassifier e medimos seu desempenho. Aplicamos técnicas como
-cross_value_score (para medir se havia overfitting) e confusion_matrix pra estudar
-os erros do modelo. Também exploramos os dados do classification_report.
-"""
+iris.py
 
+This script represents our first Machine Learning project. We load the Iris dataset, 
+train a RandomForestClassifier, and measure its performance by computing accuracy, 
+cross-validation scores, a confusion matrix, and a classification report.
+
+Usage:
+  1. The script uses the Iris dataset from scikit-learn.
+  2. It trains a RandomForestClassifier with a predefined random_state for reproducibility.
+  3. The script splits the data into training and testing sets (80% / 20%).
+  4. It evaluates model performance by:
+     - Calculating the accuracy on the test set.
+     - Applying cross_val_score to assess potential overfitting.
+     - Generating and displaying a confusion matrix.
+     - Printing a classification report.
+
+Dependencies:
+  - Python 3.x
+  - scikit-learn
+  - pandas (optional: shown for demonstration if needed for data manipulation)
+
+Author:
+  [Your Name or Organization]
+
+License:
+  [Optional: Specify License]
+"""
 
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
@@ -17,6 +38,7 @@ import pandas as pd
 
 iris = load_iris()
 
+# Uncomment the following lines to convert the dataset into a pandas DataFrame.
 # data = pd.DataFrame(iris.data, columns=iris.feature_names)
 # data['target'] = iris.target
 
@@ -25,24 +47,23 @@ y = iris.target
 
 model = RandomForestClassifier(random_state=42)
 
-# Treinando o modelo
+# Training the model
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
 model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
 
 accuracy = accuracy_score(y_test, y_pred)
-print(f"Precisão do modelo: {accuracy:.2f}")
+print(f"Model accuracy: {accuracy:.2f}")
 
-# Testando o quanto os dados tendem ao overfitting
+# Testing potential overfitting using cross-validation
 scores = cross_val_score(model, X, y, cv=5)
-print(f"Acurracy média: {scores.mean():.2f}")
+print(f"Mean accuracy via cross-validation: {scores.mean():.2f}")
 
-# Gerando uma confusion matrix
+# Generating a confusion matrix
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
 
-# Classification report
+# Displaying a classification report
 report = classification_report(y_test, y_pred)
 print(report)

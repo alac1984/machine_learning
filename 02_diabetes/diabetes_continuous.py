@@ -1,10 +1,34 @@
 """
-Nesse script trabalhamos com o dataset de diabetes "diabetes_data.csv", mantendo
-sua coluna risk_score como contínua, e usamos então algumas técnicas para treinar
-um modelo para dados contínuos (RandomForestRegressor) e avaliar a eficiência do
-mesmo (mean_absolute_error, mean_squared_error, cross_val_score). Exploramos também
-como "afinar" um modelo para conseguir um melhor desempenho. Com Seaborn fizemos
-um heatmap pra ver quais features eram mais relevantes em relação a target.
+diabetes_continuous.py
+
+This script demonstrates a basic workflow for training a Random Forest Regressor on a diabetes dataset.
+It reads the data from 'diabetes_data.csv', splits the features and target, and trains the model to
+predict the 'risk_score'. Various regression metrics (MAE and MSE) are computed to evaluate the
+model performance, and a residual plot is generated to visualize prediction errors.
+
+Usage:
+  1. Place the 'diabetes_data.csv' file in the same directory as this script.
+  2. Run the script. It will:
+     - Load and preprocess the data (dropping irrelevant columns: 'user_id' and 'date').
+     - Split the data into training and testing sets.
+     - Train a Random Forest Regressor with predefined hyperparameters.
+     - Generate predictions on the test set.
+     - Calculate and print out the Mean Absolute Error (MAE) and Mean Squared Error (MSE).
+     - Produce and save a residuals plot ('residuos.png').
+
+Dependencies:
+  - Python 3.x
+  - pandas
+  - scikit-learn
+  - seaborn
+  - matplotlib
+
+Author:
+    André Carvalho <alac1984@gmail.com>
+
+License:
+  [MIT]
+
 """
 
 from sklearn.datasets import load_iris
@@ -20,19 +44,13 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-###########################
-#### Carregar os dados ####
-###########################
-
+# Loading data
 df = pd.read_csv('diabetes_data.csv')
 
-#######################################################
-#### Ver se a data é relevante em relação ao target ###
-#######################################################
 
-# # Criar os dados para o heatmap
+# # Creating a heatmap
 # heat_data = df.drop(columns=['user_id'])
-# # Preprocessar os dados de data (para evitar erros com datas em formato string)
+# # Preprocessing data 
 # heat_data['year'] = pd.to_datetime(heat_data['date']).dt.year
 # heat_data['month'] = pd.to_datetime(heat_data['date']).dt.month
 # heat_data['day'] = pd.to_datetime(heat_data['date']).dt.day
@@ -44,7 +62,7 @@ df = pd.read_csv('diabetes_data.csv')
 # ]
 # heat_data = heat_data[new_order]
 
-# # Montar o heatmap
+# # Plotting the heatmap
 # plt.figure(figsize=(12,10))
 # sns.heatmap(heat_data.corr(), annot=True, fmt=".2f", cmap="coolwarm", cbar=True)
 # plt.xticks(rotation=45, ha='right')
@@ -53,18 +71,14 @@ df = pd.read_csv('diabetes_data.csv')
 # plt.tight_layout()
 # plt.savefig('heatmap.png')
 
-#########################
-#### Treinar o modelo ###
-#########################
-
-# Separar os dados
+# Putting data apart
 X = df.drop(columns=['user_id', 'date', 'risk_score'])
 y = df['risk_score']
 
-# Definir treino e teste
+# Defining train and test
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Definir o modelo
+# Defining the model
 model = RandomForestRegressor(
     n_estimators=200,
     max_depth=10,
@@ -76,32 +90,27 @@ model = RandomForestRegressor(
     n_jobs=-1
 )
 
-# Treinar
+# Training
 model.fit(X_train, y_train)
 
-# Predizer teste
+# Predict test
 y_pred = model.predict(X_test)
 
-# Caucular MAE
+# Calculating MAE
 mae = mean_absolute_error(y_test, y_pred)
 print(f"mae: {mae:.2f}")
 
-# Caucular MSE
+# Calculating MSE
 mse = mean_squared_error(y_test, y_pred)
 print(f"mse: {mse:.2f}")
 
-# Como o MAE deu 3.38 e o MSE deu 19.51 (6x maior que o MAE), devemos
-# ter casos com grandes erros. Vamos plota-los.
+# As the MAE gave 3.38 and the MSE gave 19.51 (6x greater than the MAE), we must
+# have cases with big errors. Let's plot them.
 
-
-########################################
-#### Calculando e plotando residuals ###
-#######################################
-
-# Calculando os residuals
+# Calculating residuals
 residuals = y_test - y_pred
 
-# Plotando
+# Plotting
 plt.scatter(y_test, residuals)
 plt.axhline(y=0, color='r', linestyle='--')
 plt.xlabel('Valores reais')
