@@ -7,7 +7,6 @@ import pytest
 @pytest.fixture(scope="function")
 def testdb():
     with SQLiteDB(":memory:") as conn:
-        conn.row_factory = sqlite3.Row
         cur = conn.cursor()
         cur.execute("""
             create table test(
@@ -22,4 +21,3 @@ def testdb():
         """)
 
         yield conn
-

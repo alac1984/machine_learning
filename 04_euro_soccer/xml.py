@@ -1,0 +1,29 @@
+from bs4 import BeautifulSoup as soup
+
+
+def determine_winner():
+    ...
+
+def get_shoton():
+    ...
+
+def get_shotoff():
+    ...
+
+def get_foulcommit():
+    ...
+
+def get_ycard():
+    ...
+
+def get_rcard():
+    ...
+
+def get_cross():
+    ...
+
+def get_corner():
+    ...
+
+def get_possession():
+    ...

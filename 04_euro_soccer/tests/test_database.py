@@ -18,11 +18,9 @@ def test_extract_data(testdb):
     settings = Settings("test")
     cur = testdb.cursor()
     sql = "select * from test"
-    data = extract_data(settings, sql, testdb)
+    data = extract_data(settings, sql, conn=testdb)
 
     assert data[0]["id"] == 1
     assert data[0]["name"] == "Andre"
     assert data[1]["id"] == 2
     assert data[1]["name"] == "Monalise"
-
-
