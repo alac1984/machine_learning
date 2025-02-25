@@ -1,9 +1,6 @@
 from bs4 import BeautifulSoup as soup
 
 
-def determine_winner():
-    ...
-
 def get_shoton():
     ...
 
